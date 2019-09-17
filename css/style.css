@@ -1,0 +1,98 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+html,body,.containe {
+	height: 100%;
+	display: flow-root;
+	overflow: hidden;
+}
+.containe{
+	position: relative;
+	overflow: hidden;
+	display: flow-root;
+}
+.containe > .left {
+	position: relative;
+	width: 220px;
+	background-color: #333;
+	height: 100vh;
+	max-height: 100vh;
+	float: left;
+	color: #ffffff;
+}
+.containe > .left a {
+	color: #ffffff;
+	font-size: 14px;
+}
+.left > .title {
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 4em;
+	border-bottom: 1px solid #ededed
+}
+.left >ul.left_nav {
+	height: 100%;
+
+}
+.left >ul.left_nav > li{
+	text-align: center;
+	line-height: 3em;
+	border-bottom: 1px solid #ededed
+}
+.left >ul.left_nav > li.current{
+	background-color: #ededed;
+}
+.left >ul.left_nav > li.current a{
+	color: #333;
+}
+
+.containe > .right {
+	width: 1316px;
+	min-width: 70px;
+	box-sizing: border-box;
+	min-height: 70px;
+	background-color: #ededed;
+	/*margin-left: 220px;*/
+	padding: 10px 0 10px 20px;
+	height: 100%;
+	float: right;
+	margin-left: 220px;
+	position: absolute;
+}
+.containe > .right >.content {
+	border-radius: 5px;
+	background-color: #ffffff;
+	height: 100%;
+	box-sizing: border-box;
+	padding: 1em 0 1em 1em;
+
+}
+.containe > .right >.content >.mb_nav{
+	border-bottom: 1px solid #ccc;
+	line-height: 2em;
+	margin-bottom: .5em;
+	min-height: 40px;
+	/*position: fixed;*/
+
+}
+
+.right>.content>.mb_nav>.left_nav{
+	/*background-color: red;*/
+	display: flow-root;
+}
+.mb_nav>.left_nav>li{
+	list-style: none;
+	float: left;
+}
+#wrapper{
+	max-height: 600px;
+	padding-bottom: 58px;
+	box-sizing: border-box;
+	height: 100%;
+	overflow-y: scroll;
+}
+
+
+

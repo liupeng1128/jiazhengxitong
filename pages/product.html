@@ -1,0 +1,274 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1391059_hk81ixldkhv.css">
+    <link rel="stylesheet" href="./bootstrap-4.3.1-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">-->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+    var baseurl = "http://134.175.100.63:6677";
+    var myId;
+    var btn_add = document.getElementById("btn_add");
+    //加载数据
+    function reloadDate() {
+        var url = baseurl + "/product/findAll";
+        $.get(url, function (result) {
+            if (result.status === 200) {
+                $("#custom_tbl>tbody").empty();
+                result.data.forEach(function (item) {
+                    $(`<tr>
+                <td><input type="checkbox" value="`+item.id+`"></td>
+                <td>`+item.name+`</td>
+                <td>`+item.description+`</td>
+                <td>`+item.price+`</td>
+                <td>`+item.status+`</td>
+                <td>`+item.photo+`</td>
+                <td>`+item.categoryId+`</td>
+                <td>
+<!--                    <a class="btn_del fa fa-trash text-danger" href="javascript:void(0) href=""></a>-->
+					<a class="btn_del" href="javascript:void(0)">删除</a>
+					<a class="btn_upd" href="javascript:void(0)">修改</a>
+                </td>
+            </tr>`).appendTo("#custom_tbl>tbody");
+                })
+            } else {
+                alert("服务接口出错")
+            }
+        });
+    }
+    //加载数据结束
+
+    //保存更新顾客信息
+    function submitCustomer(){
+        //1.获取用户手机号密码
+        var  name = $("#customer_form input[name=name]").val();
+        var  description = $("#customer_form input[name=description]").val();
+        var  price = $("#customer_form input[name=price]").val();
+        var  status = $("#customer_form input[name=status]").val();
+        var  photo = $("#customer_form input[name=photo]").val();
+        var  categoryId = $("#customer_form input[name=categoryId]").val();
+
+        //2.与后台交互
+        var url = baseurl+"/product/saveOrUpdate";
+        // var id = $("#customer_form input[name=id]").val();
+        // var id = document.querySelector("input[name=id]").value;
+        if (myId){
+            data = {
+                name: name,
+                description: description,
+                price: price,
+                status: status,
+                photo: photo,
+                categoryId: categoryId,
+                id:myId
+            };
+            myId = '';
+        }else {
+            data = {
+                name: name,
+                description: description,
+                price: price,
+                status: status,
+                photo: photo,
+                categoryId: categoryId
+            }
+        }
+        $.post(url,data,function (result) {
+            if (result.status === 200){
+                $("#exampleModal").modal("hide");
+                reloadDate();
+            } else {
+                alert("接口异常");
+                $("#exampleModal").modal("hide");
+            }
+        })
+        //3.关闭模态框，刷新列表
+    }
+    $(function () {
+        //1.重载数据
+        reloadDate();
+        //2.为添加按钮绑定事件
+        $("#btn_add").click(function () {
+            $("#exampleModal").modal("show");
+        });
+        //3.监听模态框的关闭
+        $("#exampleModal").on('hidden.bs.modal',function (e) {
+            $(this).find("form")[0].reset();
+        })
+    });
+    // 为删除按钮绑定事件处理函数
+    $("#custom_tbl>tbody").on('click','a',function () {
+        if (event.target.nodeName === "A") {
+            //0. 获取当前行的id
+            switch (event.target.className) {
+                case "btn_del":
+                    // console.log(event.target.parentNode.parentNode.children[0].children);
+                    var id = event.target.parentNode.parentNode.children[0].children[0].value;
+                    var url =  baseurl + "/product/deleteById";
+                    var data = "id=" + id;
+                    $.get(url,data,function (result) {
+                        reloadDate();
+                        alert(result.message);
+                    });
+                    break;
+                case "btn_upd":
+                    //1.将原有的信息放入表单中
+                    $(".btn_upd").click(function () {
+                        $("#exampleModal").modal("show");
+                    });
+                    myId = $(this).parents('tr').find('input').val();
+                    // var id = event.target.parentNode.parentNode.children[0].value;
+                    console.log(id);
+                    // $("#customer_form input[name=id]").val(id);///
+                    var name = event.target.parentNode.parentNode.children[1].innerText;
+                    var description = event.target.parentNode.parentNode.children[2].innerText;
+                    var price = event.target.parentNode.parentNode.children[3].innerText;
+                    var status = event.target.parentNode.parentNode.children[4].innerText;
+                    var photo = event.target.parentNode.parentNode.children[5].innerText;
+                    var categoryId = event.target.parentNode.parentNode.children[6].innerText;
+
+                    document.querySelector("input[name=name]").value = name;
+                    document.querySelector("input[name=description]").value = description;
+                    document.querySelector("input[name=price]").value = price;
+                    document.querySelector("input[name=status]").value = status;
+                    document.querySelector("input[name=photo]").value = photo;
+                    document.querySelector("input[name=categoryId]").categoryId = categoryId;
+                    break;
+            }
+        }
+    });
+    /*批量删除*/
+
+    //批量删除
+    $(function () {
+        reloadDate();
+        $('#btn_batch_del').click(function () {
+            var ids = $("input[type=checkbox]:checked").map(function (index, item) {
+                return $(item).val();
+            }).toArray();
+            var url=baseurl+"/product/batchDelete";
+            var data = " ";
+
+            //多选id值较多，采用遍历
+            for (var index in ids){
+                var id = ids[index];
+                if (index == 0){
+                    data+= "ids="+id
+                }else{
+                    data += "&ids=" +id
+                }
+            }
+            $.post(url,data,function (result) {
+                if (result.status ===200){
+                    alert('删除成功');
+                    reloadDate();
+                }else{
+                    alert(result.message);
+                }
+            });
+        });
+    });
+    // 批量删除结束
+</script>
+<div class="container">
+    <br>
+    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">添加</button>
+    <div class="btn btn-outline-danger" id="btn_batch_del">批量删除</div>
+    <br>
+    <!--        表格-->
+    <br>
+    <table class="table table-sm table-hover table-bordered" id="custom_tbl">
+        <thead  class="text-center">
+        <tr>
+            <td width="60">编号</td>
+            <td>姓名</td>
+            <td>描述</td>
+            <td>价格</td>
+            <td>状态</td>
+            <td>图片</td>
+            <td>产品id</td>
+            <td width="60" class="text-center">操作</td>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <!--        表格-->
+</div>
+<!--模态框开始-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="customModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">请输入信息</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--                  模态框内容-->
+                <form id="customer_form">
+                        <input  type="hidden" name="id">
+                    <!--姓名-->
+                    <div class="form-group row">
+                        <label for="input_name" class="col-sm-2 text-right">姓名</label>
+                        <div class="col-sm-10">
+                            <input id="input_name" class="form-control" name="name" type="text">
+                        </div>
+                    </div>
+                    <!--姓名结束-->
+                    <!--密码-->
+                    <div class="from-group row">
+                        <label for="input_description" class="col-sm-2 text-right">描述</label>
+                        <div class="col-sm-10">
+                            <input id="input_description" class="form-control" name="description" type="text">
+                        </div>
+                    </div>
+                    <br>
+                    <!--密码结束-->
+                    <!--手机号-->
+                    <div class="form-group row">
+                        <label for="input_price" class="col-sm-2 text-right">价格</label>
+                        <div class="col-sm-10">
+                            <input id="input_price" class="form-control" name="price" type="text">
+                        </div>
+                    </div>
+                    <!--手机号-->
+                    <div class="form-group row">
+                        <label for="input_status" class="col-sm-2 text-right">状态</label>
+                        <div class="col-sm-10">
+                            <input id="input_status" class="form-control" name="status" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="input_photo" class="col-sm-2 text-right">照片</label>
+                        <div class="col-sm-10">
+                            <input id="input_photo" class="form-control" name="photo" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="input_categoryId" class="col-sm-2 text-right">顾客id</label>
+                        <div class="col-sm-10">
+                            <input id="input_categoryId" class="form-control" name="categoryId" type="text">
+                        </div>
+                    </div>
+                </form>
+                <!--模态框内容-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary " data-dismiss="modal" onclick="submitCustomer()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--模态框结束-->
+
+<!--</body>
+</html>-->

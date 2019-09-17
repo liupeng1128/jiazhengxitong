@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>仿家政后台管理系统</title>
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/index.js"></script>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1391059_hk81ixldkhv.css">
+   <link rel="stylesheet" href="./bootstrap-4.3.1-dist/css/bootstrap.css">
+    <script rel="script" src="./bootstrap-4.3.1-dist/js/bootstrap.js"></script>
+    <script src="https://eqcn.ajz.miesnfu.com/wp-content/plugins/wp-3d-pony/live2dw/lib/L2Dwidget.min.js"></script>
+    <style>
+        .icon-guke {
+            font-size: 20px;
+        }
+        .hover{
+            background-color: teal;
+        }
+        .none{
+            background-color: black;
+        }
+        .mb_nav>ul>li{
+            float: left;
+        }
+        #sh{
+            position: fixed;
+            z-index: 2;
+            width: 100%;
+            /*float: top;*/
+        }
+        .left_nav>li>a{
+            text-decoration-line: none;
+        !important;
+        }
+        .con{
+            background-color: #ccc;
+            width: 100%;
+            height: 40px;
+            opacity: 0.8;
+        }
+        #MyCanvas{
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div class="alert alert-danger alert-dismissible fade show con" id="sh" role="alert">
+    <canvas width="1500" height="50" id="MyCanvas"></canvas>
+
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="containe">
+    <!-- 左侧导航 -->
+    <div class="left">
+        <div class="title">仿家政后台管理系统</div>
+        <ul class="left_nav">
+            <li url="./pages/customer.html"><a href="javascript:void (0)"><i class="iconfont icon-guke"></i>&nbsp 顾客管理</a></li>
+            <li url="./pages/waiter.html"><a href="javascript:void (0)"><i class="iconfont icon-yuangong"></i>&nbsp 员工管理</a></li>
+            <li url="./pages/category.html"><a href="javascript:void (0)"><i class="iconfont icon-fenlei"></i>&nbsp 分类管理</a></li>
+            <li url="./pages/product.html"><a href="javascript:void (0)"><i class="iconfont icon-stack"></i>&nbsp 产品管理</a></li>
+            <li url="./pages/address.html"><a href="javascript:void (0)"><i class="iconfont icon-pinglun"></i>&nbsp 地址管理</a></li>
+            <li url="./pages/order.html"><a href="javascript:void (0)"><i class="iconfont icon-dingdan"></i>&nbsp 订单管理</a></li>
+            <li url="./pages/comment.html"><a href="javascript:void (0)"><i class="iconfont icon-pinglun"></i>&nbsp 评论管理</a></li>
+        </ul>
+    </div>
+    <div class="right">
+        <div class="content">
+            <div class="mb_nav">
+                </div>
+            <div id="wrapper">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $('ul.left_nav').on('mouseover','li',function () {
+        $(this).addClass('hover').siblings().removeClass('hover');
+    });
+    $('ul.left_nav').on('click','li',function () {
+        $(this).addClass('current').siblings().removeClass('current');
+    });
+    $('ul.left_nav').on('mouseout','li',function () {
+        $(this).removeClass('hover');
+    })
+
+    var Mycanvas = document.getElementById("MyCanvas");
+    //获取画布的操作对象
+    var mc = Mycanvas.getContext("2d");
+
+    //文字绘制
+    mc.beginPath();
+    mc.font="16px 微软雅黑";//设置文字的样式
+    var x=1500;
+    function pmd() {
+        x--;
+        if (x<=-500)
+            x=1500;
+        mc.clearRect(0,0,1500,40);//清除指定区域,x,y,w,h
+        mc.fillText(" 注意！！！订单管理模块和评论模块后台接口有问题,部分功能无法实现",x,20);//设置str,x,y
+    }
+    setInterval("pmd()",20);
+    //绘制一个渐变矩形，首先需要去预设渐变效果
+    var color = mc.createLinearGradient(0,0,1500,0);//设置渐变方向
+    color.addColorStop(0,"green");//给我们的渐变色添加颜色
+    color.addColorStop(0.2,"skyblue");//给我们的渐变色添加颜色
+    color.addColorStop(0.6,"orange");//给我们的渐变色添加颜色
+    color.addColorStop(1,"red");//给我们的渐变色添加颜色
+    mc.fillStyle = color;
+    mc.fillRect(50,3050,300,100);//绘制实心矩形 设置x,y,w,h
+</script>
+<script>
+    L2Dwidget.init({
+        "model": {
+            //jsonpath控制显示那个小萝莉模型，下面这个就是我觉得最可爱的小萝莉模型，替换时后面名字也要替换掉
+            jsonPath: "https://unpkg.com/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json",
+            "scale": 1
+        },
+        "display": {
+            "position": "right", //看板娘的表现位置
+            "width": 100,  //小萝莉的宽度
+            "height": 200, //小萝莉的高度
+            "hOffset": 1338,
+            "vOffset": 30
+        },
+        "mobile": {
+            "show": true,
+            "scale": 0.5
+        },
+        "react": {
+            "opacityDefault": 0.7,
+            "opacityOnHover": 0.2
+        }
+    });
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
