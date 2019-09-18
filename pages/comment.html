@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">-->
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1421836_ct3ol85cqrv.css">
+<style>
+    .icon-shanchu{
+        color: red;
+    }
+    .icon-xiugai{
+        color: blue;
+    }
+</style>
 <script>
     var baseurl = "http://134.175.100.63:6677";
     var btn_add = document.getElementById("btn_add");
@@ -26,8 +35,8 @@
                 <td>`+item.orderId+`</td>
                 <td>
 <!--                    <a class="btn_del fa fa-trash text-danger" href="javascript:void(0) href=""></a>-->
-					<a class="btn_del" href="javascript:void(0)">删除</a>
-					<a class="btn_upd" href="javascript:void(0)">修改</a>
+					 <i class="iconfont icon-shanchu" id="btn_del"></i>
+                <i class="iconfont icon-xiugai" id="btn_upd"></i>
                 </td>
             </tr>`).appendTo("#custom_tbl>tbody");
                 })
@@ -89,9 +98,8 @@
     });
     // 为删除按钮绑定事件处理函数
     $("#custom_tbl>tbody").on('click','a',function () {
-        if (event.target.nodeName === "A") {
             //0. 获取当前行的id
-            switch (event.target.className) {
+            switch (this.id) {
                 case "btn_del":
                     // console.log(event.target.parentNode.parentNode.children[0].children);
                     var id = event.target.parentNode.parentNode.children[0].children[0].value;
@@ -104,9 +112,7 @@
                     break;
                 case "btn_upd":
                     //1.将原有的信息放入表单中
-                    $(".btn_upd").click(function () {
-                        $("#exampleModal").modal("show");
-                    });
+                    $("#exampleModal").modal("show");
                     var id = $(this).parents('tr').find('input').val();
                     // var id = event.target.parentNode.parentNode.children[0].value;
                     console.log(id);
@@ -120,7 +126,7 @@
                     document.querySelector("input[name=id]").value = id;
                     break;
             }
-        }
+
     });
     /*批量删除*/
 

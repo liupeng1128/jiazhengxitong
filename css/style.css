@@ -2,26 +2,24 @@
 	margin: 0;
 	padding: 0;
 }
-html,body,.containe {
+html,body,.container-fluid {
 	height: 100%;
 	display: flow-root;
 	overflow: hidden;
 }
-.containe{
-	position: relative;
+.container-fluid{
 	overflow: hidden;
-	display: flow-root;
+
 }
-.containe > .left {
-	position: relative;
-	width: 220px;
-	background-color: #333;
-	height: 100vh;
-	max-height: 100vh;
-	float: left;
-	color: #ffffff;
-}
-.containe > .left a {
+.container-fluid > .left {
+	 min-width: 220px;
+	 background-color: #01aa8d;
+	 height: 100vh;
+	 max-height: 100vh;
+	 float: left;
+	 color: #ffffff;
+ }
+.container-fluid > .left a {
 	color: #ffffff;
 	font-size: 14px;
 }
@@ -48,11 +46,8 @@ html,body,.containe {
 	color: #333;
 }
 
-.containe > .right {
-	width: 1316px;
-	min-width: 70px;
+.container > .right {
 	box-sizing: border-box;
-	min-height: 70px;
 	background-color: #ededed;
 	/*margin-left: 220px;*/
 	padding: 10px 0 10px 20px;
@@ -61,15 +56,14 @@ html,body,.containe {
 	margin-left: 220px;
 	position: absolute;
 }
-.containe > .right >.content {
+.container > .right >.content {
 	border-radius: 5px;
 	background-color: #ffffff;
 	height: 100%;
 	box-sizing: border-box;
 	padding: 1em 0 1em 1em;
-
 }
-.containe > .right >.content >.mb_nav{
+.container > .right >.content >.mb_nav{
 	border-bottom: 1px solid #ccc;
 	line-height: 2em;
 	margin-bottom: .5em;
@@ -77,7 +71,6 @@ html,body,.containe {
 	/*position: fixed;*/
 
 }
-
 .right>.content>.mb_nav>.left_nav{
 	/*background-color: red;*/
 	display: flow-root;
@@ -92,6 +85,7 @@ html,body,.containe {
 	box-sizing: border-box;
 	height: 100%;
 	overflow-y: scroll;
+	margin-top: 50px;
 }
 
 

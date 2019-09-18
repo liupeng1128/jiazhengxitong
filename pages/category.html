@@ -1,5 +1,14 @@
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1421836_ct3ol85cqrv.css">
+<style>
+    .icon-shanchu{
+        color: red;
+    }
+    .icon-xiugai{
+        color: blue;
+    }
+</style>
 <!--
 <div>
     <button id="btn_show" class="btn btn-outline-secondary">显示</button>
@@ -289,8 +298,8 @@
                 <td>`+item.parentId+`</td>
                 <td>
 <!--                    <a class="btn_del fa fa-trash text-danger" href="javascript:void(0) href=""></a>-->
-					<a class="btn_del" href="javascript:void(0)">删除</a>
-					<a class="btn_upd" href="javascript:void(0)">修改</a>
+					 <i class="iconfont icon-shanchu" id="btn_del"></i>
+                <i class="iconfont icon-xiugai" id="btn_upd"></i>
                 </td>
             </tr>`).appendTo("#custom_tbl>tbody");
                 })
@@ -349,31 +358,7 @@
             })
         }
     };
-        // =========插入与更新结束
-        /*console.log(id,"=====");
-        if (id){
-            data = {
-                name:name,
-                num:num,
-                parentId:parentId,
-                id:id
-            }
-        }else {
-            data = {
-                realname:realname,
-                password:password,
-                telephone:telephone
-            }
-        }
-        $.post(url,data,function (result) {
-            if (result.status === 200){
-                $("#exampleModal").modal("hide");
-                reloadDate();
-            } else {
-                alert("接口异常");
-                $("#exampleModal").modal("hide");
-            }
-        })*/
+
         //3.关闭模态框，刷新列表
     $(function () {
         //1.重载数据
@@ -388,12 +373,10 @@
         })
     });
     // 为删除按钮绑定事件处理函数
-    $("#custom_tbl>tbody").on('click','a',function () {
-        if (event.target.nodeName === "A") {
+    $("#custom_tbl>tbody").on('click','i',function () {
             //0. 获取当前行的id
-            switch (event.target.className) {
+            switch (this.id) {
                 case "btn_del":
-                    // console.log(event.target.parentNode.parentNode.children[0].children);
                     var id = event.target.parentNode.parentNode.children[0].children[0].value;
                     var url =  baseurl + "/category/deleteByCategoryId";
                     var data = "id=" + id;
@@ -404,9 +387,7 @@
                     break;
                 case "btn_upd":
                     //1.将原有的信息放入表单中
-                    $(".btn_upd").click(function () {
                         $("#exampleModal").modal("show");
-                    });
                     var id = $(this).parents('tr').find('input').val();
                     // var id = event.target.parentNode.parentNode.children[0].value;
                     console.log(id);
@@ -420,7 +401,7 @@
                     document.querySelector("input[name=id]").value = id;
                     break;
             }
-        }
+
     });
     /*批量删除*/
 

@@ -7,11 +7,16 @@
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="./js/index.js"></script>
-    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1391059_hk81ixldkhv.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1391059_15flbrddavi.css">
    <link rel="stylesheet" href="./bootstrap-4.3.1-dist/css/bootstrap.css">
     <script rel="script" src="./bootstrap-4.3.1-dist/js/bootstrap.js"></script>
     <script src="https://eqcn.ajz.miesnfu.com/wp-content/plugins/wp-3d-pony/live2dw/lib/L2Dwidget.min.js"></script>
     <style>
+        html,body,.container-fluid {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
         .icon-guke {
             font-size: 20px;
         }
@@ -29,6 +34,12 @@
             z-index: 2;
             width: 100%;
             /*float: top;*/
+        }
+        .container{
+            display: flow-root;
+        }
+        .left{
+            float: left;
         }
         .left_nav>li>a{
             text-decoration-line: none;
@@ -54,7 +65,7 @@
     </button>
 </div>
 
-<div class="containe">
+<div class="container-fluid">
     <!-- 左侧导航 -->
     <div class="left">
         <div class="title">仿家政后台管理系统</div>
@@ -63,7 +74,7 @@
             <li url="./pages/waiter.html"><a href="javascript:void (0)"><i class="iconfont icon-yuangong"></i>&nbsp 员工管理</a></li>
             <li url="./pages/category.html"><a href="javascript:void (0)"><i class="iconfont icon-fenlei"></i>&nbsp 分类管理</a></li>
             <li url="./pages/product.html"><a href="javascript:void (0)"><i class="iconfont icon-stack"></i>&nbsp 产品管理</a></li>
-            <li url="./pages/address.html"><a href="javascript:void (0)"><i class="iconfont icon-pinglun"></i>&nbsp 地址管理</a></li>
+            <li url="./pages/address.html"><a href="javascript:void (0)"><i class="iconfont icon-dizhi"></i>&nbsp 地址管理</a></li>
             <li url="./pages/order.html"><a href="javascript:void (0)"><i class="iconfont icon-dingdan"></i>&nbsp 订单管理</a></li>
             <li url="./pages/comment.html"><a href="javascript:void (0)"><i class="iconfont icon-pinglun"></i>&nbsp 评论管理</a></li>
         </ul>
@@ -125,8 +136,8 @@
             "position": "right", //看板娘的表现位置
             "width": 100,  //小萝莉的宽度
             "height": 200, //小萝莉的高度
-            "hOffset": 1338,
-            "vOffset": 30
+            "hOffset": 400,
+            "vOffset": -50
         },
         "mobile": {
             "show": true,
@@ -138,8 +149,10 @@
         }
     });
 </script>
-</body>
+
+    </body>
 </html>
+
 
 
 

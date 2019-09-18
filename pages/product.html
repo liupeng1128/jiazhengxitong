@@ -9,9 +9,17 @@
     <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">-->
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1421836_ct3ol85cqrv.css">
+<style>
+    .icon-shanchu{
+        color: red;
+    }
+    .icon-xiugai{
+        color: blue;
+    }
+</style>
 <script>
     var baseurl = "http://134.175.100.63:6677";
-    var myId;
     var btn_add = document.getElementById("btn_add");
     //加载数据
     function reloadDate() {
@@ -30,8 +38,8 @@
                 <td>`+item.categoryId+`</td>
                 <td>
 <!--                    <a class="btn_del fa fa-trash text-danger" href="javascript:void(0) href=""></a>-->
-					<a class="btn_del" href="javascript:void(0)">删除</a>
-					<a class="btn_upd" href="javascript:void(0)">修改</a>
+				 <i class="iconfont icon-shanchu" id="btn_del"></i>
+                <i class="iconfont icon-xiugai" id="btn_upd"></i>
                 </td>
             </tr>`).appendTo("#custom_tbl>tbody");
                 })
@@ -54,9 +62,11 @@
 
         //2.与后台交互
         var url = baseurl+"/product/saveOrUpdate";
-        // var id = $("#customer_form input[name=id]").val();
+        var id = $("#customer_form input[name=id]").val();
+
+        console.log(id,"======");
         // var id = document.querySelector("input[name=id]").value;
-        if (myId){
+        if (id){
             data = {
                 name: name,
                 description: description,
@@ -64,9 +74,9 @@
                 status: status,
                 photo: photo,
                 categoryId: categoryId,
-                id:myId
+                id:id
             };
-            myId = '';
+            console.log(categoryId,"sssss");
         }else {
             data = {
                 name: name,
@@ -101,12 +111,10 @@
         })
     });
     // 为删除按钮绑定事件处理函数
-    $("#custom_tbl>tbody").on('click','a',function () {
-        if (event.target.nodeName === "A") {
+    $("#custom_tbl>tbody").on('click','i',function () {
             //0. 获取当前行的id
-            switch (event.target.className) {
+            switch (this.id) {
                 case "btn_del":
-                    // console.log(event.target.parentNode.parentNode.children[0].children);
                     var id = event.target.parentNode.parentNode.children[0].children[0].value;
                     var url =  baseurl + "/product/deleteById";
                     var data = "id=" + id;
@@ -117,10 +125,10 @@
                     break;
                 case "btn_upd":
                     //1.将原有的信息放入表单中
-                    $(".btn_upd").click(function () {
-                        $("#exampleModal").modal("show");
-                    });
-                    myId = $(this).parents('tr').find('input').val();
+                    $("#exampleModal").modal("show");
+                    var id = $(this).parents('tr').find('input').val();
+                    // var id = event.target.parentNode.parentNode.children[0].value;
+                    $("#customer_form input[name=id]").val(id);
                     // var id = event.target.parentNode.parentNode.children[0].value;
                     console.log(id);
                     // $("#customer_form input[name=id]").val(id);///
@@ -136,10 +144,10 @@
                     document.querySelector("input[name=price]").value = price;
                     document.querySelector("input[name=status]").value = status;
                     document.querySelector("input[name=photo]").value = photo;
-                    document.querySelector("input[name=categoryId]").categoryId = categoryId;
+                    document.querySelector("input[name=categoryId]").value = categoryId;
                     break;
             }
-        }
+
     });
     /*批量删除*/
 
