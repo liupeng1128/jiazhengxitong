@@ -2,21 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3cba2caf-61e1-45e8-89b9-74679252546c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/music/fly.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ej.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ej.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/address.html" beforeDir="false" afterPath="$PROJECT_DIR$/pages/address.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/category.html" beforeDir="false" afterPath="$PROJECT_DIR$/pages/category.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/comment.html" beforeDir="false" afterPath="$PROJECT_DIR$/pages/comment.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/customer.html" beforeDir="false" afterPath="$PROJECT_DIR$/pages/customer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/order.html" beforeDir="false" afterPath="$PROJECT_DIR$/pages/order.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/product.html" beforeDir="false" afterPath="$PROJECT_DIR$/pages/product.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/waiter.html" beforeDir="false" afterPath="$PROJECT_DIR$/pages/waiter.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,8 +29,8 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/music" />
-    <property name="settings.editor.selected.configurable" value="consents" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.JavaScript" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -114,12 +103,29 @@
       <workItem from="1568726382130" duration="1728000" />
       <workItem from="1568787811590" duration="738000" />
       <workItem from="1568791295754" duration="6193000" />
-      <workItem from="1568801307820" duration="12259000" />
+      <workItem from="1568801307820" duration="13528000" />
+      <workItem from="1568854127305" duration="80000" />
+      <workItem from="1568857822822" duration="1665000" />
+      <workItem from="1568859521745" duration="86000" />
+      <workItem from="1568859623502" duration="43000" />
+      <workItem from="1568859679691" duration="1156000" />
+      <workItem from="1568860931269" duration="1602000" />
+      <workItem from="1568879103424" duration="6015000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://at.alicdn.com/t/font_1421836_ct3ol85cqrv.css">
 <style>
     .icon-shanchu{
-        color: red;
+        color:red;
     }
     .icon-xiugai{
         color: blue;
@@ -50,6 +50,50 @@
     }
     //加载数据结束
 
+
+    //关闭提示框，在点击提示框中的x才调用该函数
+    /*function closeAlert() {
+        $(this).parents(".alert").remove();
+    }*/
+    //查询所有的顾客的id，放入搜索下拉框中
+    //在页面加载的时候执行该函数
+    function searchCustomerId() {
+        //设置顾客的findAll请求地址
+        var url_findCustomerId=baseurl+"/customer/findAll";
+        $.get(url_findCustomerId,function (result) {
+            //将结果遍历出来,拿到id
+            result.data.forEach(function (item) {
+                //创建新节点，并追加到select中
+            /*第一个item.id放在value中，是为了根据顾客id查询的时候可以获取到此option的值
+                *第二个item.id放在option中间是为了显示
+                */
+            var newOption=$(`<option value="`+item.id+`">`+item.id+`</option>`);
+            $("#serach_customerId").append(newOption);
+            })
+        });
+    }
+    // 查询所有顾客id，放入模态框的下拉框中
+    // 在点击模态框显示的时候调用该函数
+    // 在点击模态框显示的时候调用该函数
+    function addCustomerId(){
+        // 设置顾客的findAll请求地址
+        var url_findCustomerId = baseurl+'/customer/findAll';
+        $.get(url_findCustomerId,function(result){
+            // 将结果遍历，拿到id
+            result.data.forEach(function(item){
+                // 新创建节点，并追加到select中
+                /*
+                *第一个item.id放在value中，是为了根据顾客id查询的时候可以获取到此option的值
+                *第二个item.id放在option中间是为了显示
+                */
+                var newOption = $(`
+					<option value="`+item.id+`">`+item.id+`</option>
+				`);
+                // 将顾客id追加到模态框的下拉框中
+                $('#input_customerId').append(newOption);
+            })
+        });
+    }
     //保存更新顾客信息
     function submitCustomer(){
         //1.获取用户手机号密码
@@ -58,13 +102,12 @@
         var  area = $("#customer_form input[name=area]").val();
         var  address = $("#customer_form input[name=address]").val();
         var  telephone = $("#customer_form input[name=telephone]").val();
-        var  customerId = $("#customer_form input[name=customerId]").val();
+        var  customerId = $("#customer_form select[name=customerId]").val();
 
         //2.与后台交互
         var url = baseurl+"/address/saveOrUpdate";
         var id = $("#customer_form input[name=id]").val();
         // var id = document.querySelector("input[name=id]").value;
-        console.log(id,"=====");
         if (id){
             data = {
                 province: province,
@@ -99,6 +142,8 @@
     $(function () {
         //1.重载数据
         reloadDate();
+        searchCustomerId();
+        addCustomerId();
         //2.为添加按钮绑定事件
         $("#btn_add").click(function () {
             $("#exampleModal").modal("show");
@@ -140,14 +185,50 @@
                     document.querySelector("input[name=area]").value = area;
                     document.querySelector("input[name=address]").value = address;
                     document.querySelector("input[name=telephone]").value = telephone;
-                    document.querySelector("input[name=customerId]").value = customerId;
+                    document.querySelector("select[name=customerId]").value = customerId;
                     document.querySelector("input[name=id]").value = id;
                     break;
             }
 
     });
-    /*批量删除*/
-
+    //根据顾客id查询地址信息
+    $("#serach_customerId").on('click',"option",function () {
+        console.log($(this).val(),"ssssss");
+       //将当前点击的option的值付给id
+       var id = $(this).val();
+       var url_searchAddress= baseurl+'/address/findByCustomerId';
+       var data = {
+           id:id
+       };
+        console.log(data,"-----");
+        console.log(id,"-----");
+       $.get(url_searchAddress,data,function (result) {
+           //根据顾客的id查询地址信息，需要将原先表格中的数据清空，在追加根据顾客id新查询的数据
+           $(".table tbody").empty();
+           result.data.forEach(function (item) {
+              var newSearchTr = $(`<tr>
+                <td><input type="checkbox" value="`+item.id+`"></td>
+                <td>`+item.province+`</td>
+                <td>`+item.city+`</td>
+                <td>`+item.area+`</td>
+                <td>`+item.address+`</td>
+                <td>`+item.telephone+`</td>
+                <td>`+item.customerId+`</td>
+                <td>
+<!--                    <a class="btn_del fa fa-trash text-danger" href="javascript:void(0) href=""></a>-->
+					 <i class="iconfont icon-shanchu" id="btn_del"></i>
+                <i class="iconfont icon-xiugai" id="btn_upd"></i>
+                </td>
+            </tr>`);
+               $(".table tbody").append(newSearchTr);
+           })
+       })
+    });
+//还原搜索
+    $("#btn_findAll").click(function () {
+        //点击按钮重新加载数据
+        reloadDate();
+    });
     //批量删除
     $(function () {
         reloadDate();
@@ -181,8 +262,22 @@
 </script>
 <div class="container">
     <br>
-    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">添加</button>
-    <div class="btn btn-outline-danger" id="btn_batch_del">批量删除</div>
+    <div class="row">
+        <div class="btns col-6">
+            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">添加</button>
+            <button class="btn btn-outline-danger" id="btn_batch_del">批量删除</button>
+        </div>
+        <div class="col-3 text-right">
+            <button class="btn btn-outline-primary" id="btn_findAll">还原</button>
+        </div>
+        <div class="serach col-3">
+            <form action="">
+                <select name="" id="serach_customerId" class="form-control">
+                    <option value="" style="display:none;">请选择顾客id</option>
+                </select>
+            </form>
+        </div>
+    </div>
     <br>
     <!--        表格-->
     <br>
@@ -241,14 +336,14 @@
                     <div class="form-group row">
                         <label for="input_area" class="col-sm-2 text-right">县</label>
                         <div class="col-sm-10">
-                            <input id="input_area" class="form-control" name="area" type="text" placeholder="必填">
+                            <input id="input_area" class="form-control" name="area" type="text">
                         </div>
                     </div>
                     <!--手机号-->
                     <div class="form-group row">
                         <label for="input_address" class="col-sm-2 text-right">详细地址</label>
                         <div class="col-sm-10">
-                            <input id="input_address" class="form-control" name="address" type="text" placeholder="必填">
+                            <input id="input_address" class="form-control" name="address" type="text">
                         </div>
                     </div>
                     <!--手机号-->
@@ -262,7 +357,10 @@
                     <div class="form-group row">
                         <label for="input_customerId" class="col-sm-2 text-right">顾客id</label>
                         <div class="col-sm-10">
-                            <input id="input_customerId" class="form-control" name="customerId" type="text">
+<!--<input id="input_customerId" class="form-control" name="customerId" type="text">-->
+                                <select id="input_customerId"  class="form-control" name="customerId">
+
+                                </select>
                         </div>
                     </div>
                 </form>
@@ -276,6 +374,5 @@
     </div>
 </div>
 <!--模态框结束-->
-
 <!--</body>
 </html>-->
